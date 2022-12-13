@@ -1,8 +1,8 @@
 # mandelbrot on Circuit Playground Bluefruit TFT Gizmo
-# https://github.com/kreier/bluefruit/app/mandelbrot.py
+# https://github.com/kreier/bluefruit/blob/main/apps/mandelbrot.py
 # 2022/12/11 v0.3
 
-import board, displayio, random, math
+import board, displayio, random, math, time
 from adafruit_gizmo import tft_gizmo
 
 display = tft_gizmo.TFT_Gizmo()
@@ -50,6 +50,7 @@ group.append(tile_grid)
 # Add the Group to the Display
 display.show(group)
 
+start = time.monotonic()
 for y in range(height):
     for x in range(width):
         c = complex(minX+x*(maxX-minX)/width, y*yScale/height-yScale/2)
@@ -63,7 +64,8 @@ for y in range(height):
         else:
             pixelcolor = iter *5
         bitmap[x, y] = pixelcolor
-
+end = time.monotonic()
+print(f"This took: {(end - start)} seconds.")
 
 # Loop forever so you can enjoy your image
 while True:
